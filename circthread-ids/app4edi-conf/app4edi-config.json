@@ -1,0 +1,15 @@
+{
+  "dataSpaceEcosystem": "CircThread",
+  "myId": {
+    "id": "<REPLACE_WITH_ORG_UNIQUE_ID>",
+    "connectorId": "https://circthread.com/ids/connector/id/<REPLACE_WITH_ORG_UNIQUE_ID>",
+    "connectorIdsEndpoint": "https://<REPLACE_DNS>:8080/<REPLACE_WITH_ORG_UNIQUE_ID>/api/ids/data",
+    "connectorLocalEndpoint": "https://<REPLACE_DNS>:8080/<REPLACE_WITH_ORG_UNIQUE_ID>"
+  },
+  "dataToPublish": {
+    "catalog": {
+      "title": "<REPLACE_WITH_CATALOG_TITLE>",
+      "descr": "<REPLACE_WITH_CATALOG_DESCRIPTION>"
+    }
+  }
+}

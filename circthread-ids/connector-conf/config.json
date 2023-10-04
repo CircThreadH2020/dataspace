@@ -1,0 +1,62 @@
+{
+  "@context" : {
+    "ids" : "https://w3id.org/idsa/core/",
+    "idsc" : "https://w3id.org/idsa/code/"
+  },
+  "@type" : "ids:ConfigurationModel",
+  "@id" : "https://w3id.org/idsa/autogen/configurationModel/711a4806-cbb4-4060-acd2-4637dee19d06",
+  "ids:configurationModelLogLevel" : {
+    "@id" : "idsc:MINIMAL_LOGGING"
+  },
+  "ids:connectorDeployMode" : {
+    "@id" : "idsc:PRODUCTIVE_DEPLOYMENT"
+  },
+  "ids:connectorDescription" : {
+    "@type" : "ids:BaseConnector",
+    "@id" : "https://circthread.com/ids/connector/id/<REPLACE_WITH_ORG_UNIQUE_ID>",
+    "ids:publicKey" : {
+      "@type" : "ids:PublicKey",
+      "@id" : "https://w3id.org/inesctec/circthread/autogen/publicKey/<REPLACE_WITH_IDS_UUID>",
+      "ids:keyType" : {
+        "@id" : "idsc:RSA"
+      },
+      "ids:keyValue" : "<REPLACE_WITH_PUBLIC_KEY>"
+    },
+    "ids:description" : [ {
+      "@value" : "IDS Connector reference implementation",
+      "@type" : "http://www.w3.org/2001/XMLSchema#string"
+    } ],
+    "ids:version" : "8.0.3",
+    "ids:hasDefaultEndpoint" : {
+      "@type" : "ids:ConnectorEndpoint",
+      "@id" : "https://w3id.org/inesctec/circthread/autogen/connectorEndpoint/42a38070-5869-4e27-8c00-3088a5058c7b",
+      "ids:accessURL" : {
+        "@id" : "https://<REPLACE_DNS>:8080/<REPLACE_WITH_ORG_UNIQUE_ID>/api/ids/data"
+      }
+    },
+    "ids:outboundModelVersion" : "4.2.7",
+    "ids:inboundModelVersion" : [ "4.0.0", "4.1.0", "4.1.2", "4.2.0", "4.2.1", "4.2.2", "4.2.3", "4.2.4", "4.2.5", "4.2.6", "4.2.7" ],
+    "ids:title" : [ {
+      "@value" : "Dataspace Connector - CircThread - <REPLACE_WITH_ORG_UNIQUE_ID>",
+      "@type" : "http://www.w3.org/2001/XMLSchema#string"
+    } ],
+    "ids:securityProfile" : {
+      "@id" : "idsc:BASE_SECURITY_PROFILE"
+    },
+    "ids:curator" : {
+      "@id" : "https://www.inesctec.pt/"
+    },
+    "ids:maintainer" : {
+      "@id" : "https://www.inesctec.pt/"
+    }
+  },
+  "ids:trustStore" : {
+    "@id" : "file:///tmp/conf/truststore.p12"
+  },
+  "ids:connectorStatus" : {
+    "@id" : "idsc:CONNECTOR_ONLINE"
+  },
+  "ids:keyStore" : {
+    "@id" : "file:///tmp/conf/ids.certificate.p12"
+  }
+}

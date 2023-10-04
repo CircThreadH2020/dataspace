@@ -1,0 +1,93 @@
+version: '3.7'
+
+services:
+
+    haproxy:
+        image: haproxy:2.7.8
+        container_name: 'circthread-haproxy'
+        ports:
+            - '8080:8080'   # forwarded to circthread-connector
+            - '8090:8090'   # forwarded to circthread-app4edi
+        volumes:
+            - './haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg'
+            - './haproxy-cert.pem:/usr/local/etc/haproxy/server.pem'
+        restart: always
+        stop_grace_period: 30s
+        networks:
+            - circthread
+        
+    postgres:
+        image: postgres:14.4
+        container_name: 'postgres'
+        # no need to expose the port
+        #   ports:
+        #     - '5433:5433'
+        environment:
+            - 'PGPORT=5433'
+            - 'POSTGRES_USER=postgres'
+            - 'POSTGRES_PASSWORD=12345'
+            - 'POSTGRES_DB=postgres'
+        networks:
+            - circthread
+        volumes:
+            - './postgres-data:/var/lib/postgresql/data'
+            - './postgres-init.sh:/docker-entrypoint-initdb.d/init-user-db.sh'
+        command: postgres -c 'max_connections=300' -c 'shared_buffers=80MB'
+        restart: always
+        stop_grace_period: 30s
+        
+    circthread-connector:
+        image: docker-registry.inesctec.pt/ids/dataspace-app-4edi/dataspace-connector:latest
+        container_name: 'circthread-connector'
+        # no need to expose this port as it is exposed by haproxy's frontend
+        #   ports:
+        #     - '8080:8080'
+        environment:
+            - 'application.http.base-url=https://<REPLACE_DNS>:8080'
+            - 'configuration.keyStorePassword=<REPLACE_PASSWORD_1>' 
+            - 'server.ssl.key-store-password=<REPLACE_PASSWORD_1>' 
+            - 'spring.security.user.password=<REPLACE_PASSWORD_2>' 
+            - 'spring.security.app.name=app'
+            - 'spring.security.app.password=<REPLACE_PASSWORD_2>'
+            - 'server.servlet.context-path=/<REPLACE_WITH_ORG_UNIQUE_ID>'
+        env_file:
+            - connector.env
+        volumes:
+            - './connector-conf:/tmp/conf'
+        networks:
+            - circthread
+        depends_on:
+            - postgres
+        restart: always
+        stop_grace_period: 30s
+
+    circthread-app4edi:
+        image: docker-registry.inesctec.pt/ids/dataspace-app-4edi/dataspace-app-4edi:latest
+        container_name: 'circthread-app4edi'
+        # no need to expose this port as it is exposed by haproxy's frontend
+        #   ports:
+        #     - '8090:8090'
+        environment:
+            - 'server.servlet.context-path=/<REPLACE_WITH_ORG_UNIQUE_ID>'
+            # Authentication to use when accessing the DataspaceConnector
+            - 'DataspaceApp4EDI.connector.rest.user.name=admin'
+            - 'DataspaceApp4EDI.connector.rest.user.password=<REPLACE_PASSWORD_2>' 
+            # Authentication accepted by the DataspaceApp4EDI REST API
+            - 'spring.security.user.name=app'
+            - 'spring.security.user.password=<REPLACE_PASSWORD_2>' 
+        env_file:
+            - app4edi.env
+        volumes:
+            - './app4edi-conf:/tmp/conf'
+            - './app4edi-edi-artifacts:/tmp/edi-artifacts'
+            - './app4edi-data-published:/tmp/data-published'
+        networks:
+            - circthread
+        depends_on:
+            - circthread-connector
+            - postgres
+        restart: always
+        stop_grace_period: 30s
+
+networks:
+    circthread:
