@@ -156,9 +156,9 @@ The provision of data involves the creation of an element (called Data Resource)
 			"term1",
 			"term2"
 		],
-		"license": "http://...url-for-the-license.../",
-		"standard": "http://...url-for-standard-used.../",
-		"endpointDocumentation": "https://...url-for-technical-doc.../",
+		"license": "http://url-for-the-license/",
+		"standard": "http://url-for-standard-used/",
+		"endpointDocumentation": "https://url-for-technical-doc/",
 		"keyValueSet": {
 			"key1": "value1",
 			"key2": "value2"
