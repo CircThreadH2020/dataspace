@@ -37,7 +37,7 @@ services:
         stop_grace_period: 30s
         
     circthread-connector:
-        image: docker-registry.inesctec.pt/ids/dataspace-app-4edi/dataspace-connector:latest
+        image: docker-registry.inesctec.pt/ids/dataspace-app-4edi/dataspace-connector:8.0
         container_name: 'circthread-connector'
         # no need to expose this port as it is exposed by haproxy's frontend
         #   ports:
@@ -62,7 +62,7 @@ services:
         stop_grace_period: 30s
 
     circthread-app4edi:
-        image: docker-registry.inesctec.pt/ids/dataspace-app-4edi/dataspace-app-4edi:latest
+        image: docker-registry.inesctec.pt/ids/dataspace-app-4edi/dataspace-app-4edi:1.16
         container_name: 'circthread-app4edi'
         # no need to expose this port as it is exposed by haproxy's frontend
         #   ports:
