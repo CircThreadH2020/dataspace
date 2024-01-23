@@ -181,7 +181,7 @@ The provision of data involves the creation of an element (called Data Resource)
 		},
 		"contracts": [
 			{
-				"title": "PDP-P20230303 ; public access",
+				"title": "PDP-P20230303;public_access",
 				"start": "2023-03-01T00:00:00Z",
 				"end": "2025-03-01T00:00:00Z",
 				"consumer": "",
