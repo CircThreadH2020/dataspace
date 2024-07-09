@@ -1,15 +1,15 @@
 {
-  "dataSpaceEcosystem": "CircThread",
+  "dataSpaceEcosystem": "circthread",
   "myId": {
-    "connectorManagerId": "<REPLACE_WITH_ORG_UNIQUE_ID>",
-    "connectorId": "https://circthread.com/ids/connector/id/<REPLACE_WITH_ORG_UNIQUE_ID>",
-    "connectorIdsEndpoint": "https://<REPLACE_DNS>:8080/<REPLACE_WITH_ORG_UNIQUE_ID>/api/ids/data",
-    "connectorLocalEndpoint": "https://<REPLACE_DNS>:8080/<REPLACE_WITH_ORG_UNIQUE_ID>"
+    "connectorManagerId": "<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>",
+    "connectorId": "https://circthread.com/ids/connector/id/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>",
+    "connectorIdsEndpoint": "https://<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>:8080/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>/api/ids/data",
+    "connectorLocalEndpoint": "https://<REPLACE_DNS_CONNECTOR_LOCAL_ENDPOINT>:8080/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>"
   },
   "localMembers": [
     {
       "id"  : "<REPLACE_WITH_ORG_UNIQUE_ID>",
-      "uri" : "https://circthread.com/ids/connector/id/<REPLACE_WITH_ORG_UNIQUE_ID>"
+      "uri" : "<REPLACE_WITH_ORG_UNIQUE_URI>"
     }
   ]
 }

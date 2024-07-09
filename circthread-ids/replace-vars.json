@@ -1,10 +1,11 @@
 {
+    "<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>": "replacement_value",
     "<REPLACE_WITH_ORG_UNIQUE_ID>": "replacement_value",
-    "<REPLACE_DNS>": "replacement_value",
+    "<REPLACE_WITH_ORG_UNIQUE_URI>": "replacement_value",
+    "<REPLACE_DNS_CONNECTOR_LOCAL_ENDPOINT>": "circthread-connector",
+    "<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>": "localhost",
     "<REPLACE_WITH_IDS_UUID>": "replacement_value",
     "<REPLACE_WITH_PUBLIC_KEY>": "replacement_value",
     "<REPLACE_PASSWORD_1>": "replacement_value",
-    "<REPLACE_PASSWORD_2>": "replacement_value",
-    "<REPLACE_WITH_CATALOG_TITLE>": "replacement_value",
-    "<REPLACE_WITH_CATALOG_DESCRIPTION>": "replacement_value"
+    "<REPLACE_PASSWORD_2>": "replacement_value"
 }

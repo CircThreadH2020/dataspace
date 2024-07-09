@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo Stopping circthread-app4edi and circthread-connector
-docker compose stop circthread-app4edi circthread-connector
+docker compose down circthread-app4edi circthread-connector
 
 echo Removing the DB used by circthread-app4edi
 docker exec -it postgres psql -U postgres -c "DROP DATABASE app4edidb;"
@@ -23,8 +23,10 @@ echo Cleaning and recreating folder app4edi-data-published
 sudo rm -r app4edi-data-published
 mkdir app4edi-data-published
 
+docker compose build  --no-cache  --pull
+
 echo Starting circthread-app4edi and circthread-connector
-docker compose start circthread-app4edi circthread-connector
+docker compose up -d circthread-app4edi circthread-connector  --remove-orphans
 
 echo ReStarting haproxy
 docker compose restart haproxy

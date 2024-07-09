@@ -13,7 +13,7 @@
   },
   "ids:connectorDescription" : {
     "@type" : "ids:BaseConnector",
-    "@id" : "https://circthread.com/ids/connector/id/<REPLACE_WITH_ORG_UNIQUE_ID>",
+    "@id" : "https://circthread.com/ids/connector/id/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>",
     "ids:publicKey" : {
       "@type" : "ids:PublicKey",
       "@id" : "https://w3id.org/inesctec/circthread/autogen/publicKey/<REPLACE_WITH_IDS_UUID>",
@@ -26,18 +26,18 @@
       "@value" : "IDS Connector reference implementation",
       "@type" : "http://www.w3.org/2001/XMLSchema#string"
     } ],
-    "ids:version" : "8.0.3",
+    "ids:version" : "8.0.9",
     "ids:hasDefaultEndpoint" : {
       "@type" : "ids:ConnectorEndpoint",
       "@id" : "https://w3id.org/inesctec/circthread/autogen/connectorEndpoint/42a38070-5869-4e27-8c00-3088a5058c7b",
       "ids:accessURL" : {
-        "@id" : "https://<REPLACE_DNS>:8080/<REPLACE_WITH_ORG_UNIQUE_ID>/api/ids/data"
+        "@id" : "https://<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>:8080/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>/api/ids/data"
       }
     },
     "ids:outboundModelVersion" : "4.2.7",
     "ids:inboundModelVersion" : [ "4.0.0", "4.1.0", "4.1.2", "4.2.0", "4.2.1", "4.2.2", "4.2.3", "4.2.4", "4.2.5", "4.2.6", "4.2.7" ],
     "ids:title" : [ {
-      "@value" : "Dataspace Connector - CircThread - <REPLACE_WITH_ORG_UNIQUE_ID>",
+      "@value" : "Dataspace Connector - circthread - <REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>",
       "@type" : "http://www.w3.org/2001/XMLSchema#string"
     } ],
     "ids:securityProfile" : {
