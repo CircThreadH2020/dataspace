@@ -19,7 +19,7 @@ the one of 'Data Owner' (the entity that holds the sovereignty over a given data
 the one of 'Data User' (the entity that uses a given data set), and the ones of Data Provider and 
 Data Consumer, roles assumed by IDS Connectors, with the responsibility of publishing data in the 
 virtual space and, conversely, of providing controlled access to this same data. 
-In the CircThread context, entities are textile organizations.
+In the CircThread context, entities correspond to any type of organizations.
 
 # 2. One Connector per Organization <a name="2.OneConnectorPerOrganization"></a>
 
@@ -29,7 +29,7 @@ each associated with each IS. Thus, ISa is associated with Ca and ISb with Cb. I
 in the ISa ICT infrastructure and, likewise, Cb should reside in the ISb infrastructure. Data exchange between ISa and ISb are carried out by the associated Connectors, Ca and Cb. 
 
 Please note that data exchange between any two ISs are carried out by Connectors associated with each IS in question 
-(but there is only one Connector per entity, regardless of the number of business partners).
+(but there is only one Connector per entity, regardless of the number of entities with whom data exchange is done).
 
 # 3. Shared Connector mode <a name="3.SharedConnectorMode"></a>
 Regardless of the location where a Connector is hosted, having a Connector associated with each organization 
@@ -192,8 +192,8 @@ Go to an Internet browser and insert the link of the Circthread Connector:
 https://....:8090/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>/swagger-ui.html
 ```
 
-Logging requires that you supply: as username the contents of either <REPLACE_WITH_ORG1_UNIQUE_ID> or
-<REPLACE_WITH_ORG2_UNIQUE_ID> and as password the contents of <REPLACE_PASSWORD_2>.
+Logging requires that you supply: as username the contents of <REPLACE_WITH_ORG_UNIQUE_ID>
+and as password the contents of <REPLACE_PASSWORD_2>.
 
 # 5. Using the Data-Space-App <a name="5.Usage"></a>
 
