@@ -1,22 +1,72 @@
 # Index
 
-1. [Deployment](#1.Deployment)
-2. [Using the Data-Space-App](#2.Usage)
-	1. [Basic concepts](#2.1Concepts)
-	2. [Checking the configuration](#2.2Configuration)
-	3. [Providing data](#2.3DataProvision)
-	4. [Accessing remote data](#2.4DataAccess)
-	5. [Consulting the MetadataBroker](#2.5MetadataBroker)
+1. [Introduction](#1.Introduction)
+2. [One Connector per Organization](#2.OneConnectorPerOrganization)
+3. [Shared Connector mode](#3.SharedConnectorMode)
+4. [Deployment](#4.Deployment)
+5. [Using the Data-Space-App](#5.Usage)
+	1. [Basic concepts](#5.1Concepts)
+	2. [Checking the configuration](#5.2Configuration)
+	3. [Providing data](#5.3DataProvision)
+	4. [Accessing remote data](#5.4DataAccess)
+	5. [Consulting the MetadataBroker](#5.5MetadataBroker)
 
+# 1. Introduction <a name="1.Introduction"></a>
 
-# 1. Deployment <a name="1.Deployment"></a>
+The CircThread Connector constitutes the main instrument to enable the sharing/consumption of data in a virtual
+environment (‘data space’) by information systems or human operators. In this context, several roles are identified, 
+the one of 'Data Owner' (the entity that holds the sovereignty over a given data set), 
+the one of 'Data User' (the entity that uses a given data set), and the ones of Data Provider and 
+Data Consumer, roles assumed by IDS Connectors, with the responsibility of publishing data in the 
+virtual space and, conversely, of providing controlled access to this same data. 
+In the CircThread context, entities are textile organizations.
+
+# 2. One Connector per Organization <a name="2.OneConnectorPerOrganization"></a>
+
+When adopting the IDS technology, typically, an IDS Connector is defined for each entity. In the CircThread context, 
+when there is provision and consumption of data between two information systems (ISa and ISb), there are two connectors (Ca and Cb), 
+each associated with each IS. Thus, ISa is associated with Ca and ISb with Cb. Ideally, Ca should reside 
+in the ISa ICT infrastructure and, likewise, Cb should reside in the ISb infrastructure. Data exchange between ISa and ISb are carried out by the associated Connectors, Ca and Cb. 
+
+Please note that data exchange between any two ISs are carried out by Connectors associated with each IS in question 
+(but there is only one Connector per entity, regardless of the number of business partners).
+
+# 3. Shared Connector mode <a name="3.SharedConnectorMode"></a>
+Regardless of the location where a Connector is hosted, having a Connector associated with each organization 
+ends up being a bit restrictive and not very scalable in some contexts. 
+
+The IDS reference model defines the role of “Service Provider”, assumed by ICT companies that provide software 
+and/or services to participants (entities) in an IDS data space. It is expected that this ICT company will host 
+the technical infrastructure that allows entities to participate in an IDS data space without having to 
+install/host that same technical infrastructure (i.e. the Connector). 
+
+A new functionality was introduced in version 1.16.0 of the Circthread Connector: the possibility of associating a 
+Connector not with a single organization but with a group of organizations, having the Connector 
+handling all data exchange to and from each of the entities in the group. This 'shared' operating mode 
+allows one to deal with several situations: 1) the case of a single instance of an IS (Information System) being used by several 
+organizations, in which we start to make use of a single IDS Connector responsible for exchanging data 
+between these same organizations and any others available in the data space; 2) case of a portal, 
+used by several entities without an IS, in which, equally, the exchange of data is ensured by the 
+same Connector. 
+
+However, the shared working mode should be applied only when the group of organizations is served by the 
+same ICT company that provides them with software and/or services.
+
+# 4. Deployment <a name="4.Deployment"></a>
+
+This repository contains the Circthread Connector, which comprises the following components:
+- IDS Dataspace Connector,
+- DataSpaceApp4EDI,
+- Postgres database
+- haProxy
 
 ### Prerequisites:
-- One machine running Ubuntu Server (more advanced) or Desktop 20.04 with a public domain name (other versions may work but have not been thoroughly tested).
-- This machine must have preferably a public host name or IP address.
+- One machine running Ubuntu Server 20.04 LTS or Desktop 20.04 LTS with a public domain name 
+(other versions of Linux may work but have not been tested).
+- This machine must have a public host name or IP address.
 - Port 8080 is the Connector's access point. This port must be exposed to the Internet.
 - Port 8090 is the DataSpace4Edi's access point. This port must be exposed to the Internet.
-- Java 17 must be installed on the machine.
+- Java 21 must be installed on the machine.
 - Docker and the Compose plugin must be installed on the machine (follow instructions below):
 	- https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 	- https://docs.docker.com/engine/install/linux-postinstall/
@@ -25,7 +75,7 @@
 ### Step 1:  Download and unzip the distribution
 
 ```
-wget https://gitlab.inesctec.pt/ids/dataspace-4circthread/-/raw/main/circthread-ids.zip
+wget https://github.com/CircThreadH2020/dataspace/-/raw/main/circthread-ids.zip
 unzip circthread-ids.zip
 cd circthread-ids
 ```
@@ -36,73 +86,96 @@ cd circthread-ids
 chmod +x *.sh
 ```
 
-
 ### Step 3: Replace sensitive data fields
 
-The strings you will need to replace are the following:
-| String | Description |
-|--|--|
-| `<REPLACE_WITH_ORG_UNIQUE_ID>` | This organization's unique ID is the one INESC TEC used when creating your connector. |
-| `<REPLACE_DNS>` | This is the domain name of your machine (this may be simply the IP address of your host machine). |
-| `<REPLACE_WITH_IDS_UUID>` | This string is provided to you by INESC TEC. |
-| `<REPLACE_WITH_PUBLIC_KEY>` | This string is provided to you by INESC TEC. |
-| `<REPLACE_PASSWORD_1>` | This is the connector keystore password, provided to you by INESC TEC. |
-| `<REPLACE_PASSWORD_2>` | Choose a secure password. This is the REST API Interface password. |
-| `<REPLACE_WITH_CATALOG_TITLE>` | Choose a title for the Catalog that will hold the Data Resources that will be published. |
-| `<REPLACE_WITH_CATALOG_DESCRIPTION>` | Choose a description for the Catalog. |
+The strings you will need to replace are the following (see also the guidelines below):
 
+| String                                       | Description                                                                                                         |
+|----------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| `<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>` | This unique ID identifies the company responsible for managing the Circthread Connector.                            |
+| `<REPLACE_WITH_ORG_UNIQUE_ID>`               | This unique ID identifies the organization that will be associated with the Circthread Connector.                   |
+| `<REPLACE_WITH_ORG_UNIQUE_URI>`              | More complete representation of <REPLACE_WITH_ORG_UNIQUE_ID>.                                                       |
+| `<REPLACE_DNS_CONNECTOR_LOCAL_ENDPOINT>`     | This is the domain name of the Connector component within the docker network (use the name 'circthread-connector'). |
+| `<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>`       | This is the domain name of the Connector component as seen from the Internet.                                       |
+| `<REPLACE_WITH_IDS_UUID>`                    | This string is provided to you by INESC TEC.                                                                        |
+| `<REPLACE_WITH_PUBLIC_KEY>`                  | This string is provided to you by INESC TEC.                                                                        |
+| `<REPLACE_PASSWORD_1>`                       | This is the connector keystore password, provided to you by INESC TEC.                                              |
+| `<REPLACE_PASSWORD_2>`                       | Choose a secure password. This is the REST API Interface password.                                                  |
 
-We provide a script where you can choose the values for these strings and replace all the strings at once, in all the needed files.
+We provide a script where you can choose the values for these strings and 
+replace all the strings at once, in all the needed files of the distribution.
 
-1. Open the `replace-vars.json` file, and replace each `replacement_value` instance with the value given to you, or chosen by you, i.e. `"<REPLACE_WITH_ORG_UNIQUE_ID>": "myOrganization"`. Make sure the information is correct and save the file before proceeding to the next step.
+1. Open the `replace-vars.json` file, and replace each `replacement_value` instance with the value given to you, or chosen by you, i.e. 
+`"<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>": "myOrganization"`. Make sure the information is correct and save the file before proceeding to the next step.
+  
+Guidelines for the first adopters of IDS technology in the Circthread project:
+- Set `<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>` with the identifier of your organization
+(request this identifier from INESC TEC).
+- Set `<REPLACE_WITH_ORG_UNIQUE_ID>` with the identifier of the organization that will act as DataOwners/DataUsers. 
+Use a simple String taken from the official name of the company.
+- Set `<REPLACE_WITH_ORG_UNIQUE_URI>` with the identifier of the organization that will act as DataOwners/DataUsers.
+It is a more complete identifier of `<REPLACE_WITH_ORG_UNIQUE_ID>`.
+- Set `<REPLACE_DNS_CONNECTOR_LOCAL_ENDPOINT>` with the value `circthread-connector`.
+- Set `<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>` with the public DNS or public IP address of the Linux system hosting the 
+Connector.
+- Request INESC TEC the values to assign to `<REPLACE_WITH_IDS_UUID>`, `<REPLACE_WITH_PUBLIC_KEY>` and `<REPLACE_PASSWORD_1>`.
 
-Please send an email to INESC TEC (ana.c.chaves@inesctec.pt) requesting the registration of the CircThread Connector
-with the following items (you can also fulfill the form [Participant Registration Template.docx](Participant%20Registration%20Template.docx)):
-
-* Description of your organization: legalName, mnemonic, corporate email, corporate homepage,
+Please send an email to INESC TEC (ana.c.chaves@inesctec.pt) requesting the registration of the Circthread Connector 
+with the following items:
+- Description of your organization: legalName, mnemonic, corporate email, corporate homepage, 
 address of main site, fiscal id
-* Contact point in your organization (person to be contacted about IDS related aspects): first and last name,
+- Contact point in your organization (person to be contacted about IDS related aspects): first and last name, 
 email, phone number
-Identifiers for <REPLACE_WITH_ORG1_UNIQUE_ID> and <REPLACE_WITH_ORG2_UNIQUE_ID>
-
-DNS or IP address of the computer system that will host the Connector (or localhost if you can't have a public IP address)
+- Identifier for `<REPLACE_WITH_ORG_UNIQUE_ID>`
+- DNS or IP address of the computer system that will host the Connector 
 
 2. Execute the script:
 
-    	./replace-vars.sh
-
+```
+./replace-vars.sh
+```
 
 ### Step 4: Add the IDS Certificate to the `connector-conf` directory
 
-INESC TEC will provide you with this certificate. It is a `.p12` file.
-Put it on folder `./connector-conf` before proceeding.
+INESC TEC will provide you with this certificate. It is a file with name `ids.certificate.p12`. Put it on folder `./connector-conf` before proceeding.
 
 ### Step 5: Create the app4edi keystore
 
 Execute the script:
 
-    ./create-certs.sh
+```
+./create-certs.sh
+```
 
-The script will create certificates for the haproxy and app4edi services, using the IDS certificate provided by INESC TEC. Please note that the IDS certificate ensures the digital identity of the Connector in the ecosystem and it is related with the domain name or IP address that you have previously sent to INESC TEC, prior to the creation of the IDS certificate (please make sure that your host machine has that domain name or IP address).  
+The script will create certificates for the haproxy and app4edi components, using the IDS certificate provided by INESC TEC. 
+Please note that the IDS certificate ensures the digital identity of the Connector in the ecosystem and it is 
+related with the domain name or IP address that you have previously sent to INESC TEC, prior to the creation of the 
+IDS certificate (please make sure that your host machine has that domain name or IP address).  
 
-As we are also using the IDS certificate on the SSL connections to the haproxy and app4edi services, you will get a security warning whenever you try accessing the REST API through a browser. You can either ignore this warning or, if you want, you can request a real certificate for your host machine created by a trusted Certificate Authority. If you opt for the latter, please contact INESC TEC team to inform you of the necessary changes.
+As we are also using the IDS certificate on the SSL connections to the haproxy and app4edi services, 
+you will get a security warning whenever you try accessing the REST API through a browser. You can either 
+ignore this warning or, if you want, you can request a real certificate for your host machine created by a 
+trusted Certificate Authority. If you opt for the latter, please contact INESC TEC team to inform you of the necessary changes.
 
 ### Step 6: Now run the distribution
 
 ```
 ./start.sh
 ```
+
 *Note: The script will take about a minute to fully execute*
 
-To stop the CircThread Connector, simply use the script:
+To stop the Circthread Connector, simply use the script:
+
 ```
 ./stop.sh
 ```
 
-*Note: There is a 'reset.sh' script that will stop down the Connector, delete
+*Note: There is a 'reset.sh' script that will stop down the Connector, delete 
 any data generated by the Connector, clear the DataBase and start again the Connector.*
 
 ### Step 7: Check that the solution started properly
+
 ```
 docker compose logs -f circthread-app4edi
 ```
@@ -110,12 +183,19 @@ You should get an output like the following one where the last lines say that:<b
 '*Tomcat started on port(s): 8090 (https) 8085 (http) with context path '/[app_context_path]'
 Started DataSpaceApp4Edi in 34.917 seconds (process running for 37.297)*'
 
+![Swagger Interface](images/app4edi-startup.png)
 
-![Swagger Interface](./images/app4edi-startup.png)
+### Step 8: Access the Swagger user interface
 
+Go to an Internet browser and insert the link of the Circthread Connector:
+```
+https://....:8090/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>/swagger-ui.html
+```
 
+Logging requires that you supply: as username the contents of either <REPLACE_WITH_ORG1_UNIQUE_ID> or
+<REPLACE_WITH_ORG2_UNIQUE_ID> and as password the contents of <REPLACE_PASSWORD_2>.
 
-# 2. Using the Data-Space-App <a name="2.Usage"></a>
+# 5. Using the Data-Space-App <a name="5.Usage"></a>
 
 The user interface of the DataSpaceApp (formely known as DataSpaceApp4EDI) is a swagger-based interface that describes the REST-based API of the App whilst allowing you to manually interact with it. As shown below, the user interface is organized in 8 sections.
 
@@ -138,7 +218,7 @@ For data provision and consumption, you should use sections 3, 4 and 5 of the AP
 
 ![Broker Endpoints](./images/broker_endpoints.png)
 
-## 2.1. Basic Concepts <a name="2.1Concepts"></a>
+## 2.1. Basic Concepts <a name="5.1Concepts"></a>
 
  - A Data Resource is a set of Artifacts that you create and publish.
  - An Artifact is a data file that you publish under a Data Resouce in order to enable Data Consumers in the ecosystem to access it.
@@ -147,13 +227,13 @@ For data provision and consumption, you should use sections 3, 4 and 5 of the AP
  - The Contract specifies the following permissions: PROVIDE_ACCESS, USAGE_DURING_INTERVAL, USAGE_UNTIL_DELETION, DURATION_USAGE, USAGE_LOGGING, USAGE_NOTIFICATION, N_TIMES_USAGE.
 
 
-## 2.2. Checking the configuration <a name="2.2Configuration"></a>
+## 2.2. Checking the configuration <a name="5.2Configuration"></a>
 
 Check if the App’s configuration matches the configuration you specified in the deployment of the solution:
 
 ![Configuration Endpoint](./images/configuration.png)
 
-## 2.3. Providing data <a name="2.3DataProvision"></a>
+## 2.3. Providing data <a name="5.3DataProvision"></a>
 
 The provision of data involves the creation of an element (called Data Resource) and the upload of data files (called Artifacts) to it.
 
@@ -214,7 +294,7 @@ After executing, you should get information describing the artifact that has jus
 
 ![Get Artifact Result](./images/get_artifact_result.png)
 
-## 2.4. Accessing remote data <a name="2.4DataAccess"></a>
+## 2.4. Accessing remote data <a name="5.4DataAccess"></a>
 
 In order to access a data file (artifact) being provided by an IDS Connector you should know its public URL. You’ll need it in this section.
 
@@ -230,7 +310,7 @@ As you proceed with accessing remote artifacts from IDS Connectors, you can acce
 
 If you need to access any of the contracted artifacts, you can open the **‘GET /api/data-resources-consumed/{dataResourceTitle}/artifacts/{artifactTitle}/data’** endpoint and download it to your computer (you’ll need to set the fields ‘dataResourceTitle’ and ‘artifactTitle’).
 
-## 2.5. Consulting the MetadataBroker <a name="2.5MetadataBroker"></a>
+## 2.5. Consulting the MetadataBroker <a name="5.5MetadataBroker"></a>
 
 In order to access a Data file (artifact) being provided by an IDS Connector you should know its public URL. If you don’t know it you may access the IDS MetadataBroker. This section shows you how you can do it.
 
