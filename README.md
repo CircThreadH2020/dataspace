@@ -218,7 +218,7 @@ For data provision and consumption, you should use sections 3, 4 and 5 of the AP
 
 ![Broker Endpoints](./images/broker_endpoints.png)
 
-## 2.1. Basic Concepts <a name="5.1Concepts"></a>
+## 5.1. Basic Concepts <a name="5.1Concepts"></a>
 
  - A Data Resource is a set of Artifacts that you create and publish.
  - An Artifact is a data file that you publish under a Data Resouce in order to enable Data Consumers in the ecosystem to access it.
@@ -227,13 +227,13 @@ For data provision and consumption, you should use sections 3, 4 and 5 of the AP
  - The Contract specifies the following permissions: PROVIDE_ACCESS, USAGE_DURING_INTERVAL, USAGE_UNTIL_DELETION, DURATION_USAGE, USAGE_LOGGING, USAGE_NOTIFICATION, N_TIMES_USAGE.
 
 
-## 2.2. Checking the configuration <a name="5.2Configuration"></a>
+## 5.2. Checking the configuration <a name="5.2Configuration"></a>
 
 Check if the App’s configuration matches the configuration you specified in the deployment of the solution:
 
 ![Configuration Endpoint](./images/configuration.png)
 
-## 2.3. Providing data <a name="5.3DataProvision"></a>
+## 5.3. Providing data <a name="5.3DataProvision"></a>
 
 The provision of data involves the creation of an element (called Data Resource) and the upload of data files (called Artifacts) to it.
 
@@ -294,7 +294,7 @@ After executing, you should get information describing the artifact that has jus
 
 ![Get Artifact Result](./images/get_artifact_result.png)
 
-## 2.4. Accessing remote data <a name="5.4DataAccess"></a>
+## 5.4. Accessing remote data <a name="5.4DataAccess"></a>
 
 In order to access a data file (artifact) being provided by an IDS Connector you should know its public URL. You’ll need it in this section.
 
@@ -310,7 +310,7 @@ As you proceed with accessing remote artifacts from IDS Connectors, you can acce
 
 If you need to access any of the contracted artifacts, you can open the **‘GET /api/data-resources-consumed/{dataResourceTitle}/artifacts/{artifactTitle}/data’** endpoint and download it to your computer (you’ll need to set the fields ‘dataResourceTitle’ and ‘artifactTitle’).
 
-## 2.5. Consulting the MetadataBroker <a name="5.5MetadataBroker"></a>
+## 5.5. Consulting the MetadataBroker <a name="5.5MetadataBroker"></a>
 
 In order to access a Data file (artifact) being provided by an IDS Connector you should know its public URL. If you don’t know it you may access the IDS MetadataBroker. This section shows you how you can do it.
 
