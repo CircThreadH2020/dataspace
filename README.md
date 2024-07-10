@@ -4,12 +4,13 @@
 2. [One Connector per Organization](#2.OneConnectorPerOrganization)
 3. [Shared Connector mode](#3.SharedConnectorMode)
 4. [Deployment](#4.Deployment)
-5. [Using the Data-Space-App](#5.Usage)
+5. [Using the DataSpaceApp4EDI througth REST interface](#5.Usage)
 	1. [Basic concepts](#5.1Concepts)
 	2. [Checking the configuration](#5.2Configuration)
 	3. [Providing data](#5.3DataProvision)
 	4. [Accessing remote data](#5.4DataAccess)
 	5. [Consulting the MetadataBroker](#5.5MetadataBroker)
+6. [Using the DataSpaceApp4EDI througth user interface](#6.Usage)
 
 # 1. Introduction <a name="1.Introduction"></a>
 
@@ -65,7 +66,7 @@ This repository contains the Circthread Connector, which comprises the following
 (other versions of Linux may work but have not been tested).
 - This machine must have a public host name or IP address.
 - Port 8080 is the Connector's access point. This port must be exposed to the Internet.
-- Port 8090 is the DataSpace4Edi's access point. This port must be exposed to the Internet.
+- Port 8090 is the DataSpace4EDI's access point. This port must be exposed to the Internet.
 - Java 21 must be installed on the machine.
 - Docker and the Compose plugin must be installed on the machine (follow instructions below):
 	- https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
@@ -181,7 +182,7 @@ docker compose logs -f circthread-app4edi
 ```
 You should get an output like the following one where the last lines say that:<br>
 '*Tomcat started on port(s): 8090 (https) 8085 (http) with context path '/[app_context_path]'
-Started DataSpaceApp4Edi in 34.917 seconds (process running for 37.297)*'
+Started DataSpaceApp4EDI in 34.917 seconds (process running for 37.297)*'
 
 ![Swagger Interface](images/app4edi-startup.png)
 
@@ -195,13 +196,13 @@ https://....:8090/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>/swagger-ui.html
 Logging requires that you supply: as username the contents of <REPLACE_WITH_ORG_UNIQUE_ID>
 and as password the contents of <REPLACE_PASSWORD_2>.
 
-# 5. Using the Data-Space-App <a name="5.Usage"></a>
+# 5. Using the DataSpaceApp4EDI througth REST interface <a name="5.Usage"></a>
 
-The user interface of the DataSpaceApp (formely known as DataSpaceApp4EDI) is a swagger-based interface that describes the REST-based API of the App whilst allowing you to manually interact with it. As shown below, the user interface is organized in 8 sections.
+The DataSpaceApp4EDI provides a swagger-based interface that describes the REST-based API of the App whilst allowing you to manually interact with it. As shown below, the swagger-based interface is organized in 8 sections.
 
 To access the swagger interface, go to `https://<REPLACE_DNS>:8090/<REPLACE_WITH_ORG_UNIQUE_ID>/swagger-ui.html` and fill in the login details. The username is `<REPLACE_WITH_ORG_UNIQUE_ID>` and the password is the one you configured earlier with `<REPLACE_PASSWORD_2>`. If you have trouble accessing the URL above, try clearing your browser's cache.
 
-**The DataSpaceApp is an extension of the IDS DataspaceConnector. This means that an instance of the DataspaceApp4EDI is always connected with a DataspaceConnector.**
+**The DataSpaceApp4EDI is an extension of the IDS DataspaceConnector. This means that an instance of the DataspaceApp4EDI is always connected with a DataspaceConnector.**
 
 This document aims to show you how to:
 
@@ -220,30 +221,33 @@ For data provision and consumption, you should use sections 3, 4 and 5 of the AP
 
 ## 5.1. Basic Concepts <a name="5.1Concepts"></a>
 
+The scenario described in this chapter is the 'General sovereign data sharing scenario'. First, documents are published by an entity along with the definition of a data usage policy. Then, entities with permission to find these documents (that is, after accepting the data usage policy), will be able to access these documents, in the form of a contract that is agreed between the two parties.
+
+The following identify the basic concepts:
+
  - A Data Resource is a set of Artifacts that you create and publish.
  - An Artifact is a data file that you publish under a Data Resouce in order to enable Data Consumers in the ecosystem to access it.
  - Each Artifact has an URL (publicUrl) that is used by a Data Consumer to start acessing the Artifact.
  - Acess to an Artifact is subject to the acceptance of a Contract. The Contract is defined by the Data Provider during the creation of a Data Resource.
  - The Contract specifies the following permissions: PROVIDE_ACCESS, USAGE_DURING_INTERVAL, USAGE_UNTIL_DELETION, DURATION_USAGE, USAGE_LOGGING, USAGE_NOTIFICATION, N_TIMES_USAGE.
 
-
 ## 5.2. Checking the configuration <a name="5.2Configuration"></a>
 
-Check if the App’s configuration matches the configuration you specified in the deployment of the solution:
+Check if the DataSpaceApp4EDI's configuration matches the configuration you specified in the deployment of the solution:
 
 ![Configuration Endpoint](./images/configuration.png)
 
 ## 5.3. Providing data <a name="5.3DataProvision"></a>
 
-The provision of data involves the creation of an element (called Data Resource) and the upload of data files (called Artifacts) to it.
+The provision of data involves the creation of an element (called Data Resource) and the upload of data files (called Artifacts) into it.
 
 **Step 1:** Go to the 'Data Resources - provider side' section in the swagger interface.
 
-**Step 2:** Open the first POST endpoint:
+**Step 2:** Open the first POST endpoint ('/api/data-resources-provided':
 
 ![Create Data Resource Endpoint](./images/create_data_resource.png)
 
-**Step 3:** Click 'Try it out' on the right hand side, set the 'dataResourceTitle' field and set the body with the following content, replacing the necessary fields with your desired Data Resource metadata:
+**Step 3:** Click 'Try it out' on the right hand side and set the body with the following content, replacing the necessary fields with your desired Data Resource metadata:
 
     {
 		"title": "PDP-P20230303",
@@ -279,9 +283,9 @@ The provision of data involves the creation of an element (called Data Resource)
 
 ![Create Data Resource Result](./images/create_data_resource_result.png)
 
-**Step 5:** Open the **'GET /api/data-resources-provided'** endpoint and verify that the Data Resource was created by inserting the 'dataResourceTitle' and executing the request.
+**Step 5:** Open the **'GET /api/data-resources-provided/{dataResourceTitle}'** endpoint and verify that the Data Resource was created by inserting the 'dataResourceTitle' and executing the request.
 
-**Step 6:** Open the **'POST /api/data-resource-provider/{dataResourceTitle}/artifacts'** endpoint and insert the title of the Data Resource and the title of the data file (artifact) you want to upload. You’ll also need to use the ‘Choose file’ button to select the file you want to upload.  Now press the 'Execute' button.
+**Step 6:** Open the **'POST /api/data-resource-provider/{dataResourceTitle}/artifacts'** endpoint and insert the title of the Data Resource and the title of the data file (Artifact) you want to upload. You’ll also need to use the ‘Choose file’ button to select the file you want to upload.  Now press the 'Execute' button.
 Please note that the field 'artifactIsDynamic', if set to true, is an indication to the system that the artifact to be published may be changed afterwards. Each such change will trigger a mechanism through which the Data Provider notifies each registered Data Consumer about that change. On the Data Consumer, the last version of the artifact will be accessible without any user intervention.
 
 ![Create Artifact](./images/create_artifact.png)
@@ -290,36 +294,44 @@ After executing, you should get information describing the artifact that has jus
 
 ![Create Artifact Result](./images/create_artifact_result.png)
 
-**Step 7:** Open the **'GET /api/data-resources-provided/{dataResourceTitle}/artifacts/{artifactTitle}/data' endpoint** and verify that the Data Resource was created by inserting the 'dataResourceTitle' and 'artifactTitle' and executing the request. You’ll get a response from the App with a file to be downloaded. This enables you to retrieve the data file from the App:
+**Step 7:** Open the **'GET /api/data-resources-provided/{dataResourceTitle}/artifacts/{artifactTitle}/data' endpoint** and verify that the Data Resource was created by inserting the 'dataResourceTitle' and 'artifactTitle' and executing the request. You’ll get a response from the DataSpaceApp4EDI with a file to be downloaded. This enables you to retrieve the data file from the DataSpaceApp4EDI:
 
 ![Get Artifact Result](./images/get_artifact_result.png)
 
 ## 5.4. Accessing remote data <a name="5.4DataAccess"></a>
 
-In order to access a data file (artifact) being provided by an IDS Connector you should know its public URL. You’ll need it in this section.
+In order to access a data file (artifact) being provided by an IDS Connector in the ecosystem (i.e. by a Data Provider) you should know its public URL ('artifactUrl'). You’ll need it in this section.
 
 **Step 1:** Go to the 'Data Resources - consumer side' section in the swagger interface.
 
-**Step 2:** Open the **'POST /api/data-resources-consumed/artifacts’** endpoint, set the  'artifactUrl' field and press the 'Execute' button. After some time, the time needed to contact the remote IDS Connector and to accept its contractual terms (in the example the contract states that any Connector has access to the Artifact), the App returns the following response where the ‘Download file’ button enables you to access the downloaded file:
+**Step 2:** Open the **'POST /api/data-resources-consumed/artifacts’** endpoint, set the  'artifactUrl' field and press the 'Execute' button. After some time, the time needed by the local IDS connector to contact the remote IDS Connector and to accept its contractual terms (in the example above the contract states that any Connector can access the Artifact), the DataSpaceApp4EDI returns the following response where the ‘Download file’ button enables you to access the downloaded file:
 
 ![Consume Artifact Result](./images/consume_artifact_result.png)
+
+Attention, by doing the above action, you are accepting the terms and conditions, as declared by the Data Provider / Data Owner in the description of the Data Resource holding the Artifact you are asking for.
 
 As you proceed with accessing remote artifacts from IDS Connectors, you can access the complete list of them in the **‘GET /api/data-resources-consumed’** endpoint:
 
 ![Get Data Resources Result](./images/get_data_resource_result.png)
 
-If you need to access any of the contracted artifacts, you can open the **‘GET /api/data-resources-consumed/{dataResourceTitle}/artifacts/{artifactTitle}/data’** endpoint and download it to your computer (you’ll need to set the fields ‘dataResourceTitle’ and ‘artifactTitle’).
+If you need to access any of the contracted artifacts, you can open the **‘GET /api/data-resources-consumed/artifacts/artifact-url’** endpoint and have access to the description of the artifact. Alternatively, you can open the **‘GET /api/data-resources-consumed/artifacts/artifact-url/data’** endpoint and have access to the artifacts' contents by downloading the artifact into your computer (for both endpoints you must supply the 'artifactUrl').
 
 ## 5.5. Consulting the MetadataBroker <a name="5.5MetadataBroker"></a>
 
-In order to access a Data file (artifact) being provided by an IDS Connector you should know its public URL. If you don’t know it you may access the IDS MetadataBroker. This section shows you how you can do it.
+In order to access a data file (artifact) being provided by an IDS Connector you should know its public URL. If you don’t know it you will have access the IDS MetadataBroker. This section shows you how you can do it.
 
-**Step 1:** Open the **‘GET /api/data-resources-on-broker’**. If you execute the request without entering a search term you’ll possibly get a long list of the Artifacts that are registered in the MetadataBroker. Instead, introduce a search term like the one in the image below and execute the request. The App will return a list of all the artifacts registered in the Broker that contain that search term (you can use more than one search term):
+**Step 1:** Open the **‘GET /api/data-resources-on-broker’** on the 'Data Resources - on Broker' section of the swagger interface. If you execute the request without entering a search term you’ll possibly get a long list of the Artifacts that are registered in the Metadata Broker. Instead of that, introduce a search term like the one in the image below and execute the request. The DataSpaceApp4EDI will return a list of all the artifacts registered in the Broker that contain that search term (you can use more than one search term):
 
 ![Search MetadataBroker](./images/search_metadataBroker.png)
 
-In the list above, copy the last term, the URL, (something like ‘https://vcese19.inesctec.pt:4567/connectors/1512659989/-1093253542/82161677’). Open the **'GET /api/data-resources-on-broker'**, and introduce that term in the field ‘offer’. Execute the request and the App will return more information about the selected artifact:
+In the list above, copy the last term, the URL, (something like ‘https://vcese19.inesctec.pt:4567/connectors/1512659989/-1093253542/82161677’). Open the **'GET /api/data-resources-on-broker'**, and introduce that term in the field ‘offer’. Execute the request and the DataSpaceApp4EDI will return more information about the selected artifact:
 
- - Its title and description, the type of permission, the name of the artifact, and its URL (the URL you will use to access the data file).
+ - Its title and description, the type of permission, the name of the artifact, and its URL (the URL you will use to access the data file). By using this URL and going throught the steps described in the previous section, you will have access to the corresponding Artifact.
 
 ![Selected Offer Result](./images/selected_offer_result.png)
+
+# 6. Using the DataSpaceApp4EDI througth user interface <a name="6.Usage"></a>
+
+The DataSpaceApp4EDI provides also a proper user interface aiming human operators. Naturally, it is more user friendly than the swagger based interface (described in the above chapter). The functions and information provided by the interface are essentially the same as the ones seen in the swagger based interface.
+
+To access the user interface, go to `https://<REPLACE_DNS>:8090/<REPLACE_WITH_ORG_UNIQUE_ID>` and fill in the login details. The username is `<REPLACE_WITH_ORG_UNIQUE_ID>` and the password is the one you configured earlier with `<REPLACE_PASSWORD_2>`. If you have trouble accessing the URL above, try clearing your browser's cache.
