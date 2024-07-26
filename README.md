@@ -335,3 +335,68 @@ In the list above, copy the last term, the URL, (something like ‘https://vcese
 The DataSpaceApp4EDI provides also a proper user interface aiming human operators. Naturally, it is more user friendly than the swagger based interface (described in the above chapter). The functions and information provided by the interface are essentially the same as the ones seen in the swagger based interface.
 
 To access the user interface, go to `https://<REPLACE_DNS>:8090/<REPLACE_WITH_ORG_UNIQUE_ID>` and fill in the login details. The username is `<REPLACE_WITH_ORG_UNIQUE_ID>` and the password is the one you configured earlier with `<REPLACE_PASSWORD_2>`. If you have trouble accessing the URL above, try clearing your browser's cache.
+
+For data provision and consumption, you should use the _IDS Scenario_:
+
+![Main Page](./images/main_page%20-%20focus.png)
+
+## 6.3. Providing data <a name="6.3DataProvision"></a>
+
+The provision of data involves the creation of an element (called Data Resource) and the upload of data files (called Artifacts) into it.
+
+**Step 1:** Go to the 'Provider' > 'Create Data Resource' section 
+
+A Data Resource is the main element for data sharing. It always has a Data Contract and Data Usage policies associated. Additionally, all files to be shared are under a data resource.
+The title and description are mandatory but other fields like keywords and licences are optional. They should be used when, for instance, the information to be shared follows a standard or needs a licence to be used. The keywords are important for visibility when a consumer is searching for datasets in a catalogue.
+
+The other mandatory element is the Contract, which is comprised of at least one policy, or it can be comprised of a combination of multiple usage policies. A policy is an organization’s rule that may be either an obligation, a permission or a prohibition:
+
+![Create Data Resource](./images/create_resource_contract.png)
+
+
+**Step 2:** Create an Artefact under the selected Data Resource
+
+The artefacts are the files or information sets and are always associated with a given Data Resource. The UI provides two methods to create the artefacts: create it from the Data Resource Menu (as shown in the following picture) or go directly to the “_Create Data Artifacts_” on the left-hand side. The latter involves the writing of the Data Resource title while the first already has some information pre-loaded.
+An artefact is considered dynamic when it allows for versions. This means that the provider can update the file and each consumer (if they exist) will automatically receive a file update.
+
+![Create Artifact](./images/add_artefact.png)
+
+**List all Contracts created**
+
+Additionally, all Contracts created by the provider can be seen on the menu _Contracts_. It also shows all rules (i.e., usage policies) associated with each contract.
+
+![List all data contracts and the associated policies](./images/provider_see_contracts.png)
+
+
+**List all contract agreements**
+
+The provider can use the menu _Contract Agreements_ to see all contracts where an agreement was achieved by a consumer.
+
+![List all contract agreements](./images/provider_see_contracts_agreements.png)
+
+
+## 6.4. Consulting the MetadataBroker <a name="6.4.MetadataBroker"></a>
+
+**Search in the Broker**
+
+When registering a Data Resource and Artifact on the dataspace their metadata will be registered on the IDS Metadata Broker, which is a catalogue of all active connectors and their data.
+
+**Note:** The _Remote URL_ is the public URL of the document, and it will be the value used to download the artefact.
+
+![Search MetadataBroker](./images/broker.png)
+
+## 6.5. Accessing remote data <a name="6.5DataAccess"></a>
+
+In order to access a data file (artifact) being provided by an IDS Connector in the ecosystem (i.e. by a Data Provider) you should know its public URL ('artifactUrl'). You’ll need it in this section.
+
+**Step 1:** Search the Broker
+
+**Step 2:** Access document
+
+To consume an artefact, it is necessary to know its remote URL. 
+The UI provides two ways of doing this. First (as shown in the next figure), press the “Access Remote Artefact” on the Broker section. 
+Secondly, manually copy the “Remote URL” value and then go to the _Consumer_ tab on the left-side menu, choose “Access Remote Artifacts” and past the value.
+
+![Consume Artifact](./images/broker_access_remote.png)
+
+Attention, by doing the above action, you are accepting the terms and conditions, as declared by the Data Provider / Data Owner in the description of the Data Resource holding the Artifact you are asking for.
