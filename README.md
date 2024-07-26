@@ -10,7 +10,11 @@
 	3. [Providing data](#5.3DataProvision)
 	4. [Accessing remote data](#5.4DataAccess)
 	5. [Consulting the MetadataBroker](#5.5MetadataBroker)
-6. [Using the DataSpaceApp4EDI througth user interface](#6.Usage)
+6. [Using the DataSpaceApp4EDI througth user interface <a name="6.Usage"></a>](#6-using-the-dataspaceapp4edi-througth-user-interface-a-name6usage-a)
+	1. [Providing data <a name="6.3DataProvision"></a>](#63-providing-data-a-name63dataprovision-a)
+    2. [Consulting the MetadataBroker <a name="6.4.MetadataBroker"></a>](#64-consulting-the-metadatabroker-a-name64metadatabroker-a)
+    3. [Accessing remote data <a name="6.5DataAccess"></a>](#65-accessing-remote-data-a-name65dataaccess-a)
+   
 
 # 1. Introduction <a name="1.Introduction"></a>
 
