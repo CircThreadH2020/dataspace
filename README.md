@@ -119,11 +119,11 @@ Guidelines for the first adopters of IDS technology in the Circthread project:
 - Set `<REPLACE_WITH_ORG_UNIQUE_ID>` with the identifier of the organization that will act as DataOwners/DataUsers. 
 Use a simple String taken from the official name of the company.
 - Set `<REPLACE_WITH_ORG_UNIQUE_URI>` with the identifier of the organization that will act as DataOwners/DataUsers.
-It is a more complete identifier of `<REPLACE_WITH_ORG_UNIQUE_ID>`.
+It is a more complete identifier of `<REPLACE_WITH_ORG_UNIQUE_ID>` (request this identifier from INESC TEC).
 - Set `<REPLACE_DNS_CONNECTOR_LOCAL_ENDPOINT>` with the value `circthread-connector`.
 - Set `<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>` with the public DNS or public IP address of the Linux system hosting the 
 Connector.
-- Request INESC TEC the values to assign to `<REPLACE_WITH_IDS_UUID>`, `<REPLACE_WITH_PUBLIC_KEY>` and `<REPLACE_PASSWORD_1>`.
+- Request INESC TEC the values to assign to `<REPLACE_WITH_IDS_UUID>`, `<REPLACE_WITH_PUBLIC_KEY>`, `<REPLACE_PASSWORD_1>` and `<REPLACE_WITH_ORG_UNIQUE_URI>`.
 
 Please send an email to INESC TEC (ana.c.chaves@inesctec.pt) requesting the registration of the Circthread Connector 
 with the following items:
