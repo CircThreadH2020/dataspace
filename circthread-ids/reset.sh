@@ -23,7 +23,8 @@ echo Cleaning and recreating folder app4edi-data-published
 sudo rm -r app4edi-data-published
 mkdir app4edi-data-published
 
-docker compose build  --no-cache  --pull
+docker compose pull
+docker compose build  --no-cache
 
 echo Starting circthread-app4edi and circthread-connector
 docker compose up -d circthread-app4edi circthread-connector  --remove-orphans

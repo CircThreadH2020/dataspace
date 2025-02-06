@@ -1,6 +1,8 @@
 #!/bin/bash
 
-docker compose build  --no-cache  --pull
+docker compose pull
+
+docker compose build  --no-cache
 
 docker compose up -d postgres  --remove-orphans
 
