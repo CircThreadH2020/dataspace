@@ -37,12 +37,12 @@ services:
         image: docker-registry.inesctec.pt/ids/dataspace-app-4edi/dataspace-connector:8.0
         container_name: 'circthread-connector'
         environment:
-            - 'application.http.base-url=https://<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>:8080'
-            - 'configuration.keyStorePassword=<REPLACE_PASSWORD_1>' 
-            - 'server.ssl.key-store-password=<REPLACE_PASSWORD_1>' 
-            - 'spring.security.user.password=<REPLACE_PASSWORD_2>' 
-            - 'spring.security.app.password=<REPLACE_PASSWORD_2>'
-            - 'server.servlet.context-path=/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>'
+            - 'APPLICATION_HTTP_BASEURL=https://<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>:8080'
+            - 'CONFIGURATION_KEYSTOREPASSWORD=<REPLACE_PASSWORD_1>' 
+            - 'SERVER_SSL_KEYSTOREPASSWORD=<REPLACE_PASSWORD_1>' 
+            - 'SPRING_SECURITY_USER_PASSWORD=<REPLACE_PASSWORD_2>' 
+            - 'SPRING_SECURITY_APP_PASSWORD=<REPLACE_PASSWORD_2>'
+            - 'SERVER_SERVLET_CONTEXTPATH=/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>'
         env_file:
             - connector.env
         volumes:
@@ -58,12 +58,12 @@ services:
         image: docker-registry.inesctec.pt/ids/dataspace-app-4edi/dataspace-app-4edi:1.17
         container_name: 'circthread-app4edi'
         environment:
-            - 'server.servlet.context-path=/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>'
+            - 'SERVER_SERVLET_CONTEXTPATH=/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>'
             # Authentication to use when accessing the DataspaceConnector
-            - 'DataspaceApp4EDI.connector.rest.user.name=admin'
-            - 'DataspaceApp4EDI.connector.rest.user.password=<REPLACE_PASSWORD_2>'
+            - 'DATASPACEAPP4EDI_CONNECTOR_REST_USER_NAME=admin'
+            - 'DATASPACEAPP4EDI_CONNECTOR_REST_USER_PASSWORD=<REPLACE_PASSWORD_2>'
             # Authentication accepted by the DataspaceApp4EDI REST API
-            - 'spring.security.user.password=<REPLACE_PASSWORD_2>'
+            - 'SPRING_SECURITY_USER_PASSWORD=<REPLACE_PASSWORD_2>'
         env_file:
             - app4edi.env
         volumes:
