@@ -100,7 +100,6 @@ The strings you will need to replace are the following (see also the guidelines 
 | `<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>` | This unique ID identifies the company responsible for managing the Circthread Connector.                            |
 | `<REPLACE_WITH_ORG_UNIQUE_ID>`               | This unique ID identifies the organization that will be associated with the Circthread Connector.                   |
 | `<REPLACE_WITH_ORG_UNIQUE_URI>`              | More complete representation of <REPLACE_WITH_ORG_UNIQUE_ID>.                                                       |
-| `<REPLACE_DNS_CONNECTOR_LOCAL_ENDPOINT>`     | This is the domain name of the Connector component within the docker network (use the name 'circthread-connector'). |
 | `<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>`       | This is the domain name of the Connector component as seen from the Internet.                                       |
 | `<REPLACE_WITH_IDS_UUID>`                    | This string is provided to you by INESC TEC.                                                                        |
 | `<REPLACE_WITH_PUBLIC_KEY>`                  | This string is provided to you by INESC TEC.                                                                        |
@@ -120,7 +119,6 @@ Guidelines for the first adopters of IDS technology in the Circthread project:
 Use a simple String taken from the official name of the company.
 - Set `<REPLACE_WITH_ORG_UNIQUE_URI>` with the identifier of the organization that will act as DataOwners/DataUsers.
 It is a more complete identifier of `<REPLACE_WITH_ORG_UNIQUE_ID>` (request this identifier from INESC TEC).
-- Set `<REPLACE_DNS_CONNECTOR_LOCAL_ENDPOINT>` with the value `circthread-connector`.
 - Set `<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>` with the public DNS or public IP address of the Linux system hosting the 
 Connector.
 - Request INESC TEC the values to assign to `<REPLACE_WITH_IDS_UUID>`, `<REPLACE_WITH_PUBLIC_KEY>`, `<REPLACE_PASSWORD_1>` and `<REPLACE_WITH_ORG_UNIQUE_URI>`.
