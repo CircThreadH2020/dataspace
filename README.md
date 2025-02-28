@@ -95,16 +95,18 @@ chmod +x *.sh
 
 The strings you will need to replace are the following (see also the guidelines below):
 
-| String                                       | Description                                                                                                         |
-|----------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| `<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>` | This unique ID identifies the company responsible for managing the Circthread Connector.                            |
-| `<REPLACE_WITH_ORG_UNIQUE_ID>`               | This unique ID identifies the organization that will be associated with the Circthread Connector.                   |
-| `<REPLACE_WITH_ORG_UNIQUE_URI>`              | More complete representation of <REPLACE_WITH_ORG_UNIQUE_ID>.                                                       |
-| `<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>`       | This is the domain name of the Connector component as seen from the Internet.                                       |
-| `<REPLACE_WITH_IDS_UUID>`                    | This string is provided to you by INESC TEC.                                                                        |
-| `<REPLACE_WITH_PUBLIC_KEY>`                  | This string is provided to you by INESC TEC.                                                                        |
-| `<REPLACE_PASSWORD_1>`                       | This is the connector keystore password, provided to you by INESC TEC.                                              |
-| `<REPLACE_PASSWORD_2>`                       | Choose a secure password. This is the REST API Interface password.                                                  |
+| String                                       | Description                                                                                           |
+|----------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| `<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>` | This unique ID identifies the company responsible for managing the Circthread Connector.              |
+| `<REPLACE_WITH_ORG1_UNIQUE_ID>`              | This unique ID identifies an organization that will be associated with the Circthread Connector.      |
+| `<REPLACE_WITH_ORG1_UNIQUE_URI>`             | More complete representation of <REPLACE_WITH_ORG1_UNIQUE_ID>.                                        |
+| `<REPLACE_WITH_ORG2_UNIQUE_ID>`              | This unique ID identifies another organization that will be associated with the Circthread Connector. |
+| `<REPLACE_WITH_ORG2_UNIQUE_URI>`             | More complete representation of <REPLACE_WITH_ORG2_UNIQUE_ID>.                                        |
+| `<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>`       | This is the domain name of the Connector component as seen from the Internet.                         |
+| `<REPLACE_WITH_IDS_UUID>`                    | This string is provided to you by INESC TEC.                                                          |
+| `<REPLACE_WITH_PUBLIC_KEY>`                  | This string is provided to you by INESC TEC.                                                          |
+| `<REPLACE_PASSWORD_1>`                       | This is the connector keystore password, provided to you by INESC TEC.                                |
+| `<REPLACE_PASSWORD_2>`                       | Choose a secure password. This is the REST API Interface password.                                    |
 
 We provide a script where you can choose the values for these strings and 
 replace all the strings at once, in all the needed files of the distribution.
@@ -115,13 +117,13 @@ replace all the strings at once, in all the needed files of the distribution.
 Guidelines for the first adopters of IDS technology in the Circthread project:
 - Set `<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>` with the identifier of your organization
 (request this identifier from INESC TEC).
-- Set `<REPLACE_WITH_ORG_UNIQUE_ID>` with the identifier of the organization that will act as DataOwners/DataUsers. 
+- Set `<REPLACE_WITH_ORG1_UNIQUE_ID>` and `<REPLACE_WITH_ORG2_UNIQUE_ID>` with the identifier of the organization that will act as DataOwners/DataUsers. 
 Use a simple String taken from the official name of the company.
-- Set `<REPLACE_WITH_ORG_UNIQUE_URI>` with the identifier of the organization that will act as DataOwners/DataUsers.
-It is a more complete identifier of `<REPLACE_WITH_ORG_UNIQUE_ID>` (request this identifier from INESC TEC).
+- Set `<REPLACE_WITH_ORG1_UNIQUE_URI>` and `<REPLACE_WITH_ORG2_UNIQUE_URI>` with the identifier of the organizations that will act as DataOwners/DataUsers.
+It is a more complete identifier of `<REPLACE_WITH_ORG1_UNIQUE_ID>` and `<REPLACE_WITH_ORG2_UNIQUE_ID>` (request this identifier from INESC TEC).
 - Set `<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>` with the public DNS or public IP address of the Linux system hosting the 
 Connector.
-- Request INESC TEC the values to assign to `<REPLACE_WITH_IDS_UUID>`, `<REPLACE_WITH_PUBLIC_KEY>`, `<REPLACE_PASSWORD_1>` and `<REPLACE_WITH_ORG_UNIQUE_URI>`.
+- Request INESC TEC the values to assign to `<REPLACE_WITH_IDS_UUID>`, `<REPLACE_WITH_PUBLIC_KEY>`, `<REPLACE_PASSWORD_1>` and `<REPLACE_WITH_ORG1_UNIQUE_URI>`.
 
 Please send an email to INESC TEC (ana.c.chaves@inesctec.pt) requesting the registration of the Circthread Connector 
 with the following items:
@@ -129,7 +131,8 @@ with the following items:
 address of main site, fiscal id
 - Contact point in your organization (person to be contacted about IDS related aspects): first and last name, 
 email, phone number
-- Identifier for `<REPLACE_WITH_ORG_UNIQUE_ID>`
+- Identifiers for `<REPLACE_WITH_ORG1_UNIQUE_ID>` and `<REPLACE_WITH_ORG2_UNIQUE_ID>`
+- Identifiers for `<REPLACE_WITH_ORG1_UNIQUE_URI>` and `<REPLACE_WITH_ORG2_UNIQUE_URI>`
 - DNS or IP address of the computer system that will host the Connector 
 
 2. Execute the script:
@@ -195,14 +198,14 @@ Go to an Internet browser and insert the link of the Circthread Connector:
 https://....:8090/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>/swagger-ui.html
 ```
 
-Logging requires that you supply: as username the contents of <REPLACE_WITH_ORG_UNIQUE_ID>
+Logging requires that you supply: as username the contents of <REPLACE_WITH_ORG1_UNIQUE_ID> or <REPLACE_WITH_ORG2_UNIQUE_ID>
 and as password the contents of <REPLACE_PASSWORD_2>.
 
 # 5. Using the DataSpaceApp4EDI througth REST interface <a name="5.Usage"></a>
 
 The DataSpaceApp4EDI provides a swagger-based interface that describes the REST-based API of the App whilst allowing you to manually interact with it. As shown below, the swagger-based interface is organized in 8 sections.
 
-To access the swagger interface, go to `https://<REPLACE_DNS>:8090/<REPLACE_WITH_ORG_UNIQUE_ID>/swagger-ui.html` and fill in the login details. The username is `<REPLACE_WITH_ORG_UNIQUE_ID>` and the password is the one you configured earlier with `<REPLACE_PASSWORD_2>`. If you have trouble accessing the URL above, try clearing your browser's cache.
+To access the swagger interface, go to `https://<REPLACE_DNS>:8090/<REPLACE_WITH_ORG1_UNIQUE_ID>/swagger-ui.html` and fill in the login details. The username is `<REPLACE_WITH_ORG1_UNIQUE_ID>` and the password is the one you configured earlier with `<REPLACE_PASSWORD_2>`. If you have trouble accessing the URL above, try clearing your browser's cache.
 
 **The DataSpaceApp4EDI is an extension of the IDS DataspaceConnector. This means that an instance of the DataspaceApp4EDI is always connected with a DataspaceConnector.**
 
@@ -336,7 +339,7 @@ In the list above, copy the last term, the URL, (something like ‘https://vcese
 
 The DataSpaceApp4EDI provides also a proper user interface aiming human operators. Naturally, it is more user friendly than the swagger based interface (described in the above chapter). The functions and information provided by the interface are essentially the same as the ones seen in the swagger based interface.
 
-To access the user interface, go to `https://<REPLACE_DNS>:8090/<REPLACE_WITH_ORG_UNIQUE_ID>` and fill in the login details. The username is `<REPLACE_WITH_ORG_UNIQUE_ID>` and the password is the one you configured earlier with `<REPLACE_PASSWORD_2>`. If you have trouble accessing the URL above, try clearing your browser's cache.
+To access the user interface, go to `https://<REPLACE_DNS>:8090/<REPLACE_WITH_ORG1_UNIQUE_ID>` and fill in the login details. The username is `<REPLACE_WITH_ORG1_UNIQUE_ID>` and the password is the one you configured earlier with `<REPLACE_PASSWORD_2>`. If you have trouble accessing the URL above, try clearing your browser's cache.
 
 For data provision and consumption, you should use the _IDS Scenario_:
 

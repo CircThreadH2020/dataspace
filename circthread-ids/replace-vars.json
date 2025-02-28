@@ -1,8 +1,10 @@
 {
     "<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>": "replacement_value",
-    "<REPLACE_WITH_ORG_UNIQUE_ID>": "replacement_value",
-    "<REPLACE_WITH_ORG_UNIQUE_URI>": "replacement_value",
-    "<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>": "localhost",
+    "<REPLACE_WITH_ORG1_UNIQUE_ID>": "replacement_value",
+    "<REPLACE_WITH_ORG1_UNIQUE_URI>": "replacement_value",
+    "<REPLACE_WITH_ORG2_UNIQUE_ID>": "replacement_value",
+    "<REPLACE_WITH_ORG2_UNIQUE_URI>": "replacement_value",
+    "<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>": "replacement_value",
     "<REPLACE_WITH_IDS_UUID>": "replacement_value",
     "<REPLACE_WITH_PUBLIC_KEY>": "replacement_value",
     "<REPLACE_PASSWORD_1>": "replacement_value",

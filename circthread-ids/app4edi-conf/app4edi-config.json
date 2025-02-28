@@ -8,8 +8,12 @@
   },
   "localMembers": [
     {
-      "id"  : "<REPLACE_WITH_ORG_UNIQUE_ID>",
-      "uri" : "<REPLACE_WITH_ORG_UNIQUE_URI>"
+      "id"  : "<REPLACE_WITH_ORG1_UNIQUE_ID>",
+      "uri" : "<REPLACE_WITH_ORG1_UNIQUE_URI>"
+    },
+    {
+      "id"  : "<REPLACE_WITH_ORG2_UNIQUE_ID>",
+      "uri" : "<REPLACE_WITH_ORG2_UNIQUE_URI>"
     }
   ]
 }

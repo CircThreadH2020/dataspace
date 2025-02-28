@@ -13,8 +13,10 @@ parse_json() {
 
 # Read variable values from the configuration file
 replace_with_connector_manager_unique_id=$(parse_json "$config_file" "<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>")
-replace_with_org_unique_id=$(parse_json "$config_file" "<REPLACE_WITH_ORG_UNIQUE_ID>")
-replace_with_org_unique_uri=$(parse_json "$config_file" "<REPLACE_WITH_ORG_UNIQUE_URI>")
+replace_with_org1_unique_id=$(parse_json "$config_file" "<REPLACE_WITH_ORG1_UNIQUE_ID>")
+replace_with_org1_unique_uri=$(parse_json "$config_file" "<REPLACE_WITH_ORG1_UNIQUE_URI>")
+replace_with_org2_unique_id=$(parse_json "$config_file" "<REPLACE_WITH_ORG2_UNIQUE_ID>")
+replace_with_org2_unique_uri=$(parse_json "$config_file" "<REPLACE_WITH_ORG2_UNIQUE_URI>")
 replace_dns_connector_ids_endpoint=$(parse_json "$config_file" "<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>")
 replace_with_ids_uuid=$(parse_json "$config_file" "<REPLACE_WITH_IDS_UUID>")
 replace_with_public_key=$(parse_json "$config_file" "<REPLACE_WITH_PUBLIC_KEY>")
@@ -29,8 +31,10 @@ find . -type f \( -name "*.json" -o -name "*.yml" -o -name "*.cfg"  -o -name "cr
   if [ -r "$file" ]; then
     # Replace variable occurrences in the file
     sed -i "s#<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>#$replace_with_connector_manager_unique_id#g" "$file"
-    sed -i "s#<REPLACE_WITH_ORG_UNIQUE_ID>#$replace_with_org_unique_id#g" "$file"
-    sed -i "s#<REPLACE_WITH_ORG_UNIQUE_URI>#$replace_with_org_unique_uri#g" "$file"
+    sed -i "s#<REPLACE_WITH_ORG1_UNIQUE_ID>#$replace_with_org1_unique_id#g" "$file"
+    sed -i "s#<REPLACE_WITH_ORG1_UNIQUE_URI>#$replace_with_org1_unique_uri#g" "$file"
+    sed -i "s#<REPLACE_WITH_ORG2_UNIQUE_ID>#$replace_with_org2_unique_id#g" "$file"
+    sed -i "s#<REPLACE_WITH_ORG2_UNIQUE_URI>#$replace_with_org2_unique_uri#g" "$file"
     sed -i "s#<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>#$replace_dns_connector_ids_endpoint#g" "$file"
     sed -i "s#<REPLACE_WITH_IDS_UUID>#$replace_with_ids_uuid#g" "$file"
     sed -i "s#<REPLACE_WITH_PUBLIC_KEY>#$replace_with_public_key#g" "$file"
