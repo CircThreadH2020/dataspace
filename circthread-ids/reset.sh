@@ -1,5 +1,17 @@
 #!/bin/bash
 
+echo "The Circthread Connector solution will be reset and its entire data base will be cleaned."
+echo "  -All published/consumed data WILL BE REMOVED."
+echo ""
+echo "Do you want to proceed with the reset?"
+select strictreply in "Yes" "No"; do
+    relaxedreply=${strictreply:-$REPLY}
+    case $relaxedreply in
+        Yes | yes | y ) echo "Starting the reset ..."; break;;
+        No  | no  | n ) echo "Abandoning the reset"; exit;;
+    esac
+done
+
 echo Stopping circthread-app4edi and circthread-connector
 docker compose down circthread-app4edi circthread-connector
 
