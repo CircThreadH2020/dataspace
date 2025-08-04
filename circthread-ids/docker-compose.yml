@@ -11,6 +11,11 @@ services:
         volumes:
             - './haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg'
             - './haproxy-cert.pem:/usr/local/etc/haproxy/server.pem'
+        logging:
+            driver: "local"
+            options:
+                max-size: "50m"
+                max-file: "5"
         restart: always
         stop_grace_period: 30s
         networks:
@@ -31,6 +36,11 @@ services:
             - './postgres-data:/var/lib/postgresql/data'
             - './postgres-init.sh:/docker-entrypoint-initdb.d/init-user-db.sh'
         command: postgres -c 'max_connections=300' -c 'shared_buffers=128MB'
+        logging:
+            driver: "local"
+            options:
+                max-size: "50m"
+                max-file: "5"
         restart: always
         stop_grace_period: 30s
         
@@ -52,6 +62,11 @@ services:
             - circthread
         depends_on:
             - postgres
+        logging:
+            driver: "local"
+            options:
+                max-size: "50m"
+                max-file: "5"
         restart: always
         stop_grace_period: 30s
 
@@ -76,6 +91,11 @@ services:
         depends_on:
             - circthread-connector
             - postgres
+        logging:
+            driver: "local"
+            options:
+                max-size: "50m"
+                max-file: "5"
         restart: always
         stop_grace_period: 30s
 
