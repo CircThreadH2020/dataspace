@@ -26,7 +26,7 @@ replace_catalog_title=$(parse_json "$config_file" "<REPLACE_WITH_CATALOG_TITLE>"
 replace_catalog_description=$(parse_json "$config_file" "<REPLACE_WITH_CATALOG_DESCRIPTION>")
 
 # Traverse through each text file in the current directory and its subdirectories
-find . -type f \( -name "*.json" -o -name "*.yml" -o -name "*.cfg"  -o -name "create-certs.sh" \) ! -name "$config_file" -print0 | while IFS= read -r -d $'\0' file; do
+find . -type f \( -name "*.properties" -o -name "*.json" -o -name "*.yml" -o -name "*.cfg"  -o -name "create-certs.sh" \) ! -name "$config_file" -print0 | while IFS= read -r -d $'\0' file; do
   # Check if the file is readable
   if [ -r "$file" ]; then
     # Replace variable occurrences in the file

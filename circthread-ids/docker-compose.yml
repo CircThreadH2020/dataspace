@@ -28,8 +28,10 @@ services:
         environment:
             - 'PGPORT=5433'
             - 'POSTGRES_USER=postgres'
-            - 'POSTGRES_PASSWORD=12345'
+            - 'POSTGRES_PASSWORD_FILE=/run/secrets/postgres.properties'
             - 'POSTGRES_DB=postgres'
+        secrets:
+            - postgres.properties
         networks:
             - circthread
         volumes:
@@ -48,14 +50,13 @@ services:
         image: docker-registry.inesctec.pt/ids/dataspace-app-4edi/dataspace-connector:8.0
         container_name: 'circthread-connector'
         environment:
-            - 'APPLICATION_HTTP_BASEURL=https://<REPLACE_DNS_CONNECTOR_IDS_ENDPOINT>:8080'
-            - 'CONFIGURATION_KEYSTOREPASSWORD=<REPLACE_PASSWORD_1>' 
-            - 'SERVER_SSL_KEYSTOREPASSWORD=<REPLACE_PASSWORD_1>' 
-            - 'SPRING_SECURITY_USER_PASSWORD=<REPLACE_PASSWORD_2>' 
-            - 'SPRING_SECURITY_APP_PASSWORD=<REPLACE_PASSWORD_2>'
-            - 'SERVER_SERVLET_CONTEXTPATH=/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>'
-        env_file:
-            - connector.env
+            - 'SPRING_CLOUD_CONFIG_ENABLED=true'
+            - 'SPRING_CLOUD_CONFIG_USERNAME=user'
+            - 'SPRING_CLOUD_CONFIG_PASSWORD=pass'
+            - 'SPRING_PROFILES_ACTIVE=default,circthread'
+            - 'SPRING_CONFIG_IMPORT=configserver:https://vcese19.inesctec.pt:8443?fail-fast=true&max-attempts=10&max-interval=1500&multiplier=1.2&initial-interval=1100,file:/run/secrets/circthread-connector.properties'
+        secrets:
+            - circthread-connector.properties
         volumes:
             - './connector-conf:/tmp/conf'
         networks:
@@ -74,14 +75,13 @@ services:
         image: docker-registry.inesctec.pt/ids/dataspace-app-4edi/dataspace-app-4edi:1.17
         container_name: 'circthread-app4edi'
         environment:
-            - 'SERVER_SERVLET_CONTEXTPATH=/<REPLACE_WITH_CONNECTOR_MANAGER_UNIQUE_ID>'
-            # Authentication to use when accessing the DataspaceConnector
-            - 'DATASPACEAPP4EDI_CONNECTOR_REST_USER_NAME=admin'
-            - 'DATASPACEAPP4EDI_CONNECTOR_REST_USER_PASSWORD=<REPLACE_PASSWORD_2>'
-            # Authentication accepted by the DataspaceApp4EDI REST API
-            - 'SPRING_SECURITY_USER_PASSWORD=<REPLACE_PASSWORD_2>'
-        env_file:
-            - app4edi.env
+            - 'SPRING_CLOUD_CONFIG_ENABLED=true
+            - 'SPRING_CLOUD_CONFIG_USERNAME=user
+            - 'SPRING_CLOUD_CONFIG_PASSWORD=pass
+            - 'SPRING_PROFILES_ACTIVE=default,circthread
+            - 'SPRING_CONFIG_IMPORT=configserver:https://vcese19.inesctec.pt:8443?fail-fast=true&max-attempts=10&max-interval=1500&multiplier=1.2&initial-interval=1100,file:/run/secrets/circthread-app4edi.properties'
+        secrets:
+            - circthread-app4edi.properties
         volumes:
             - './app4edi-conf:/tmp/conf'
             - './app4edi-edi-artifacts:/tmp/edi-artifacts'
@@ -98,6 +98,14 @@ services:
                 max-file: "5"
         restart: always
         stop_grace_period: 30s
+
+secrets:
+    postgres.properties:
+        file: ./postgres.properties
+    circthread-connector.properties:
+        file: ./circthread-connector.properties
+    circthread-app4edi.properties:
+        file: ./circthread-app4edi.properties
 
 networks:
     circthread:
